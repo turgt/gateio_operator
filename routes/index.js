@@ -55,7 +55,7 @@ router.post('/test',function(req,res,next){
           subject: 'Scheduled Email',
           text: message
       })
-          .then(_ => {console.log(Date.now() + " --------------------------------- Email will send on " + newdate)})
+          .then(_ => {console.log(moment(date).toDate() + " --------------------------------- Email will send on " + newdate)})
           .catch(error => {console.log(error)});
   }
   sendEmail("testmailiiii" + Date.now());
