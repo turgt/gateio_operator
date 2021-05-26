@@ -68,11 +68,11 @@ if __name__ == '__main__':
     print(res.json())
 
     if res.status_code == 200:
-        print("Placed Buy")
+        print("Placed Buy\n")
         if sleep != 0:
             time.sleep(sleep)
         print(str(order) + "----------" + str(order*multipler))
         res = place_order(symbol, str(order * multipler), str(count - (count * 0.2 / 100)), 'sell', 'limit')
         print(res.json())
         if res.status_code == 200:
-            print("Placed Sell")
+            print("\nPlaced Sell\n")
