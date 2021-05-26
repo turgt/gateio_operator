@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { exec } = require("child_process");
 const { execFile } = require("child_process");
+const schedule   = require('node-schedule');
+const mailer = require('nodemailer');
+const moment = require('moment');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express',saat: moment(Date.now()).toDate() });
 });
 
 router.post('/', function(req, res, next) {
@@ -31,9 +34,7 @@ router.post('/', function(req, res, next) {
 });
 
 router.post('/test',function(req,res,next){
-  const schedule   = require('node-schedule');
-  const mailer = require('nodemailer');
-  const moment = require('moment');
+  
   process.env.TZ = 'Europe/Istanbul';
   var date = Date.now();
   var newdate = moment(date).set({hour:req.body.hour,minute:req.body.minute,second:0,millisecond:0}).toDate();
