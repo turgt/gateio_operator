@@ -34,9 +34,10 @@ router.post('/test',function(req,res,next){
   const schedule   = require('node-schedule');
   const mailer = require('nodemailer');
   const moment = require('moment');
-  process.env.TZ = 'Europe/Amsterdam'
+  process.env.TZ = 'Europe/Istanbul';
   var date = Date.now();
   var newdate = moment(date).set({hour:req.body.hour,minute:req.body.minute,second:0,millisecond:0}).toDate();
+  newdate.TZ = 'Europe/Istanbul';
 
   const transporter = mailer.createTransport({
     host: "smtp.mailtrap.io",
