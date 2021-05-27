@@ -37,32 +37,30 @@ router.post('/test',function(req,res,next){
   
   process.env.TZ = 'Europe/Istanbul';
   var date = Date.now();
-  var newdate = moment(date).set({hour:req.body.hour,minute:req.body.minute,second:0,millisecond:0}).toDate();
+  var newdate = moment(date).set({hour:req.body.hour,minute:req.body.minute,second:req.body.second,millisecond:0}).toDate();
   newdate.TZ = 'Europe/Istanbul';
 
-  const transporter = mailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: "1661d6903d8c30",
-      pass: "e78996e77caea5"
-    }
-  });
-  function sendEmail(message){
-      //sending the email
-      transporter.sendMail({
-          from: 'peter@kayere.com',
-          to: 'turgutsimarmaz@gmail.com',
-          subject: 'Scheduled Email',
-          text: message
-      })
-          .then(_ => {console.log(moment(date).toDate() + " --------------------------------- Email will send on " + newdate)})
-          .catch(error => {console.log(error)});
-  }
-  sendEmail("testmailiiii" + Date.now());
   schedule.scheduleJob(newdate,function(){
-    sendEmail("testmailiiii" + Date.now())
+    execFile("/usr/bin/python3", ["main2.py", req.body.API_KEY,
+        req.body.SECRET_KEY ,
+        req.body.USDT ,
+        req.body.rate ,
+        req.body.multipler ,
+        req.body.wait ,
+        req.body.symbol]
+        , (error, stdout, stderr) => {
+      if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+    });
   });
+  res.send("Emir olusturuldu ----- " + newdate);
 });
 
 module.exports = router;
