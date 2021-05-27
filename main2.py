@@ -44,6 +44,19 @@ def place_order(symbol, price, quantity, trade_type, order_type):
     r = requests.request('POST', host + prefix + url, headers=headers, data=body)
     return r
 
+def get_ticker2(symbol):
+    host = "https://api.gateio.ws"
+    prefix = "/api/v4"
+    headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+    
+    url = '/spot/tickers'
+    query_param = '?currency_pair='+symbol
+    r = requests.request('GET', host + prefix + url+query_param, headers=headers)
+    if r.json()[0]['last'] == 0 or r.json()[0]['last'] == '':
+        get_ticker2(symbol)
+    else:
+        return r.json()
+
 
 if __name__ == '__main__':
     global API_KEY
@@ -60,7 +73,7 @@ if __name__ == '__main__':
     
     symbol = symbol+"_USDT"
 
-    y = get_ticker(symbol)
+    y = get_ticker2(symbol)
     order = float(y[0]['last']) * (rate + 100) * 0.01
     count = USDT / order
 
