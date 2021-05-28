@@ -28,6 +28,7 @@ router.post('/', function(req, res, next) {
       res.send(`stderr: ${stderr}`);
       return;
     }
+    console.log(`stdout: ${stdout}`);
     res.send(`stdout: ${stdout}`);
   });
   // res.send(req.body);
