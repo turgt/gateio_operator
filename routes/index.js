@@ -21,10 +21,12 @@ router.post('/', function(req, res, next) {
       req.body.symbol]
       , (error, stdout, stderr) => {
     if (error) {
+      console.log(`error: ${error.message}`);
       res.send(`error: ${error.message}`);
       return;
     }
     if (stderr) {
+      console.log(`stderr: ${stderr}`);
       res.send(`stderr: ${stderr}`);
       return;
     }
