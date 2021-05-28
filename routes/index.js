@@ -21,6 +21,7 @@ router.post('/', function(req, res, next) {
       req.body.symbol]
       , (error, stdout, stderr) => {
     if (error) {
+      console.log(`stdout: ${stdout}`);
       console.log(`error: ${error.message}`);
       res.send(`error: ${error.message}`);
       return;
