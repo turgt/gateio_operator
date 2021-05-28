@@ -52,6 +52,7 @@ def get_ticker2(symbol):
     url = '/spot/tickers'
     query_param = '?currency_pair='+symbol
     r = requests.request('GET', host + prefix + url+query_param, headers=headers)
+    print(r.json()[0]['last'] + '---------' + type(r.json()[0]['last']))
     if r.json()[0]['last'] == 0 or r.json()[0]['last'] == '0':
         print('döngüye girdi')
         
