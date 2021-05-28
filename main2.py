@@ -54,7 +54,7 @@ def get_ticker2(symbol):
     r = requests.request('GET', host + prefix + url+query_param, headers=headers)
     if r.json()[0]['last'] == 0 or r.json()[0]['last'] == '0':
         print('döngüye girdi')
-        get_ticker2(symbol)
+        
     else:
         return r.json()
 
