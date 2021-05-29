@@ -39,10 +39,8 @@ router.post('/', function(req, res, next) {
 
 router.post('/test',function(req,res,next){
   
-  process.env.TZ = 'Europe/Istanbul';
   var date = Date.now();
   var newdate = moment(date).set({hour:req.body.hour,minute:req.body.minute,second:req.body.second,millisecond:0}).toDate();
-  newdate.TZ = 'Europe/Istanbul';
 
   schedule.scheduleJob(newdate,function(){
     execFile("/usr/bin/python3", ["main2.py", req.body.API_KEY,

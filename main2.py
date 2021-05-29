@@ -43,7 +43,7 @@ def place_order(symbol, price, quantity, trade_type, order_type):
     headers.update(sign_headers)
     r = requests.request('POST', host + prefix + url, headers=headers, data=body)
     return r
-
+a = 0
 def get_ticker2(symbol):
     host = "https://api.gateio.ws"
     prefix = "/api/v4"
@@ -52,7 +52,8 @@ def get_ticker2(symbol):
     url = '/spot/tickers'
     query_param = '?currency_pair='+symbol
     r = requests.request('GET', host + prefix + url+query_param, headers=headers)
-    if r.json()[0]['last'] == 0 or r.json()[0]['last'] == '0':
+    if r.json()[0]['last'] == '0' and a < 10:
+        print(r.json())
         get_ticker2(symbol)
         
     else:
